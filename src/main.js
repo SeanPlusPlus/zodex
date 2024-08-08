@@ -31,7 +31,7 @@ const entries = [
     email: "not-an-email",
     hobbies: [
       { name: "Cooking" },
-      { name: 12345 },  // Invalid hobby
+      { foo: "bar" },  // Invalid hobby
     ],
   },
 ]
