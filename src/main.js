@@ -38,13 +38,7 @@ entries.forEach((entry) => {
   }
 
   if (errors.length === 0) {
-    // If no errors, create the parsedUser object
-    const parsedUser = {
-      name: entry.name,
-      age: entry.age,
-      email: entry.email,
-    }
-    console.log("Valid user:", parsedUser)
+    console.log("Valid user:", entry)
   } else {
     console.log("\nInvalid user:", JSON.stringify(errors, null, 2))
   }
