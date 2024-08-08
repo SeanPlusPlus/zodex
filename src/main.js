@@ -39,15 +39,27 @@ const entries = [
 entries.forEach((entry) => {
   const errors = []
 
-  // Parsing and validation
-  const parsedUser = {
-    name: isString(entry.name) ? entry.name : errors.push('Invalid name'),
-    age: isPositiveInteger(entry.age) ? entry.age : errors.push('Invalid age'),
-    email: isEmail(entry.email) ? entry.email : errors.push('Invalid email'),
-    hobbies: isValidHobbies(entry.hobbies) ? entry.hobbies : errors.push('Invalid hobbies'),
+  // Validation
+  if (!isString(entry.name)) {
+    errors.push('Invalid name')
+  }
+  if (!isPositiveInteger(entry.age)) {
+    errors.push('Invalid age')
+  }
+  if (!isEmail(entry.email)) {
+    errors.push('Invalid email')
+  }
+  if (!isValidHobbies(entry.hobbies)) {
+    errors.push('Invalid hobbies')
   }
 
   if (errors.length === 0) {
+    // If no errors, create the parsedUser object
+    const parsedUser = {
+      name: entry.name,
+      age: entry.age,
+      email: entry.email,
+    }
     console.log("Valid user:", parsedUser)
   } else {
     console.log("\nInvalid user:", JSON.stringify(errors, null, 2))
