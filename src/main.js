@@ -1,9 +1,11 @@
 // Validation Functions
 const isString = (value) => typeof value === 'string'
 
-const isPositiveInteger = (value) => typeof value === 'number' && Number.isInteger(value) && value > 0
+const isPositiveInteger = (value) => typeof value === 'number' && 
+  Number.isInteger(value) && value > 0
 
-const isEmail = (value) => typeof value === 'string' && /^\S+@\S+\.\S+$/.test(value)
+const isEmail = (value) => typeof value === 'string' && 
+  /^\S+@\S+\.\S+$/.test(value)
 
 const entries = [
   // Valid data
