@@ -14,39 +14,31 @@ const userSchema = z.object({
 })
 
 // TypeScript type inferred from Zod schema
-// type User = z.infer<typeof userSchema>
+type User = z.infer<typeof userSchema>
 
-const entries = [
-  // Valid data
-  {
-    name: "John Doe",
-    age: 30,
-    email: "john.doe@example.com",
-    hobbies: [
-      { name: "Running" },
-      { name: "Reading" },
-    ],
-  },
+// Function to fetch entries from the API
+async function fetchEntries() {
+  try {
+    const response = await fetch('https://simplejson.vercel.app/api/QQtkYrO9') 
+    if (!response.ok) {
+      throw new Error('Network response was not ok')
+    }
+    const data: User[] = await response.json()
 
-  // Bad Data
-  {
-    name: "John Doe 2",
-    age: -5,
-    email: "not-an-email",
-    hobbies: [
-      { name: "Cooking" },
-      { foo: "bar" },  // Invalid hobby
-    ],
-  },
-]
-
-entries.forEach((entry) => {
-  const userResult = userSchema.safeParse(entry)
-
-  if (userResult.success) {
-    console.log("Valid user:", userResult.data)
-  } else {
-    // Improved error logging
-    console.log("\nInvalid user:", JSON.stringify(userResult.error, null, 2))
+    data.forEach((entry) => {
+      const userResult = userSchema.safeParse(entry)
+    
+      if (userResult.success) {
+        console.log("Valid user:", userResult.data)
+      } else {
+        // Improved error logging
+        console.log("\nInvalid user:", JSON.stringify(userResult.error, null, 2))
+      }
+    })
+  } catch (error) {
+    console.error('Fetching data failed:', error)
   }
-})
+}
+
+// Call the function to fetch and validate entries
+fetchEntries()
