@@ -7,8 +7,12 @@ const userSchema = z.object({
   email: z.string().email(),
 })
 
-// TypeScript type inferred from Zod schema
-type User = z.infer<typeof userSchema>
+// TypeScript type explicitly defined to match Zod schema
+type User = {
+  name: string;
+  age: number;
+  email: string;
+}
 
 const entries: User[] = [
   // Valid data
