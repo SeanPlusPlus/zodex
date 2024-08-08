@@ -1,11 +1,11 @@
-// Validation Functions
-const isString = (value) => typeof value === 'string'
+import { z } from "zod"
 
-const isPositiveInteger = (value) => typeof value === 'number' && 
-  Number.isInteger(value) && value > 0
-
-const isEmail = (value) => typeof value === 'string' && 
-  /^\S+@\S+\.\S+$/.test(value)
+// Zod Schema Definition for a Valid User
+const userSchema = z.object({
+  name: z.string(),
+  age: z.number().int().positive(),
+  email: z.string().email(),
+})
 
 const entries = [
   // Valid data
@@ -24,18 +24,12 @@ const entries = [
 ]
 
 entries.forEach((entry) => {
-  const errors = []
+  const userResult = userSchema.safeParse(entry)
 
-  // Parsing and validation
-  const parsedUser = {
-    name: isString(entry.name) ? entry.name : errors.push('Invalid name'),
-    age: isPositiveInteger(entry.age) ? entry.age : errors.push('Invalid age'),
-    email: isEmail(entry.email) ? entry.email : errors.push('Invalid email'),
-  }
-
-  if (errors.length === 0) {
-    console.log("Valid user:", parsedUser)
+  if (userResult.success) {
+    console.log("Valid user:", userResult.data)
   } else {
-    console.log("\nInvalid user:", JSON.stringify(errors, null, 2))
+    // Improved error logging
+    console.log("\nInvalid user:", JSON.stringify(userResult.error, null, 2))
   }
 })
