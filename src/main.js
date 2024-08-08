@@ -7,12 +7,21 @@ const isPositiveInteger = (value) => typeof value === 'number' &&
 const isEmail = (value) => typeof value === 'string' && 
   /^\S+@\S+\.\S+$/.test(value)
 
+const isValidHobby = (hobbies) => Array.isArray(hobbies) && hobbies.every(hobby => 
+  typeof hobby === 'object' && hobby !== null && isString(hobby.name),
+)
+
+// Example entries
 const entries = [
   // Valid data
   {
     name: "John Doe",
     age: 30,
     email: "john.doe@example.com",
+    hobbies: [
+      { name: "Running" },
+      { name: "Reading" },
+    ],
   },
 
   // Bad Data
@@ -20,6 +29,10 @@ const entries = [
     name: "John Doe 2",
     age: -5,
     email: "not-an-email",
+    hobbies: [
+      { name: "Cooking" },
+      { name: 12345 },  // Invalid hobby
+    ],
   },
 ]
 
@@ -31,6 +44,7 @@ entries.forEach((entry) => {
     name: isString(entry.name) ? entry.name : errors.push('Invalid name'),
     age: isPositiveInteger(entry.age) ? entry.age : errors.push('Invalid age'),
     email: isEmail(entry.email) ? entry.email : errors.push('Invalid email'),
+    hobbies: isValidHobby(entry.hobbies) ? entry.hobbies : errors.push('Invalid hobbies'),
   }
 
   if (errors.length === 0) {
