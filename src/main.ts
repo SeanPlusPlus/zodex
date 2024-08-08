@@ -1,21 +1,31 @@
 import { z } from "zod"
 
+// Define the schema for hobbies
+const hobbySchema = z.object({
+  name: z.string(),
+})
+
 // Zod Schema Definition for a Valid User
 const userSchema = z.object({
   name: z.string(),
   age: z.number().int().positive(),
   email: z.string().email(),
+  hobbies: z.array(hobbySchema),
 })
 
 // TypeScript type inferred from Zod schema
-type User = z.infer<typeof userSchema>
+// type User = z.infer<typeof userSchema>
 
-const entries: User[] = [
+const entries = [
   // Valid data
   {
     name: "John Doe",
     age: 30,
     email: "john.doe@example.com",
+    hobbies: [
+      { name: "Running" },
+      { name: "Reading" },
+    ],
   },
 
   // Bad Data
@@ -23,6 +33,10 @@ const entries: User[] = [
     name: "John Doe 2",
     age: -5,
     email: "not-an-email",
+    hobbies: [
+      { name: "Cooking" },
+      { foo: "bar" },  // Invalid hobby
+    ],
   },
 ]
 
