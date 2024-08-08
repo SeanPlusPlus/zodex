@@ -20,7 +20,7 @@ type User = z.infer<typeof userSchema>
 async function fetchEntries() {
   try {
     const response = await fetch('https://simplejson.vercel.app/api/QQtkYrO9') 
-    
+
     const data: User[] = await response.json()
 
     data.forEach((entry) => {
