@@ -1,12 +1,3 @@
-import { z } from "zod"
-
-// Zod Schema Definition for a Valid User
-const userSchema = z.object({
-  name: z.string(),
-  age: z.number().int().positive(),
-  email: z.string().email(),
-})
-
 const entries = [
   // Valid data
   {
@@ -24,12 +15,18 @@ const entries = [
 ]
 
 entries.forEach((entry) => {
-  const userResult = userSchema.safeParse(entry)
+  const errors = []
 
-  if (userResult.success) {
-    console.log("Valid user:", userResult.data)
+  // Parsing and validation
+  const parsedUser = {
+    name: typeof entry.name === 'string' ? entry.name : errors.push('Invalid name'),
+    age: typeof entry.age === 'number' && Number.isInteger(entry.age) && entry.age > 0 ? entry.age : errors.push('Invalid age'),
+    email: typeof entry.email === 'string' && /^\S+@\S+\.\S+$/.test(entry.email) ? entry.email : errors.push('Invalid email'),
+  }
+
+  if (errors.length === 0) {
+    console.log("Valid user:", parsedUser)
   } else {
-    // Improved error logging
-    console.log("\nInvalid user:", JSON.stringify(userResult.error, null, 2))
+    console.log("\nInvalid user:", JSON.stringify(errors, null, 2))
   }
 })
