@@ -33,32 +33,3 @@ entries.forEach((entry) => {
     console.log("\nInvalid user:", JSON.stringify(userResult.error, null, 2))
   }
 })
-
-// *** Output ***
-//
-// Valid user: { name: 'John Doe', age: 30, email: 'john.doe@example.com' }
-
-// Invalid user: {
-//   "issues": [
-//     {
-//       "code": "too_small",
-//       "minimum": 0,
-//       "type": "number",
-//       "inclusive": false,
-//       "exact": false,
-//       "message": "Number must be greater than 0",
-//       "path": [
-//         "age"
-//       ]
-//     },
-//     {
-//       "validation": "email",
-//       "code": "invalid_string",
-//       "message": "Invalid email",
-//       "path": [
-//         "email"
-//       ]
-//     }
-//   ],
-//   "name": "ZodError"
-// }
